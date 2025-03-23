@@ -3,21 +3,18 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 import pickle
 import nltk
-from nltk.tokenize import word_tokenize
+from nltk.tokenize import RegexpTokenizer
 import os
 import json
 from contextlib import asynccontextmanager
 
-# Configure NLTK data path for Vercel
+# Configure NLTK data path for Render
 NLTK_DIR = "/tmp/nltk_data"
 os.makedirs(NLTK_DIR, exist_ok=True)
 nltk.data.path.append(NLTK_DIR)
 
-# Download required resources
-try:
-    nltk.data.find("tokenizers/punkt")
-except LookupError:
-    nltk.download("punkt", download_dir=NLTK_DIR)
+# Create tokenizer that doesn't require punkt_tab
+tokenizer = RegexpTokenizer(r'\w+')
 
 # Global variables for model and class names
 model = None
@@ -61,7 +58,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Define the same stemmer as in training
+# Define the stemmer using RegexpTokenizer instead of word_tokenize
 def azerbaijani_stemmer(text):
     # Common Azerbaijani suffixes
     suffixes = [
@@ -78,8 +75,8 @@ def azerbaijani_stemmer(text):
         "belə", "də", "artıq", "daha", "lakin", "çünki", "əgər"
     ]
     
-    # Tokenize and lowercase
-    words = word_tokenize(text.lower())
+    # Tokenize and lowercase using RegexpTokenizer
+    words = tokenizer.tokenize(text.lower())
     
     # Remove stop words and apply stemming
     stemmed_words = []
@@ -159,11 +156,11 @@ async def health_check():
         return {"status": "warning", "message": "Model not loaded"}
     return {"status": "ok", "message": "Service is operational"}
 
-# Add this handler for Vercel serverless deployment
+# Add this handler for serverless deployment
 from mangum import Mangum
 handler = Mangum(app)
 
-# Don't run the app when imported by Vercel
+# Don't run the app when imported by serverless platform
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
