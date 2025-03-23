@@ -9,13 +9,15 @@ import json
 from contextlib import asynccontextmanager
 
 # Configure NLTK data path for Vercel
-nltk.data.path.append("/tmp")
+NLTK_DIR = "/tmp/nltk_data"
+os.makedirs(NLTK_DIR, exist_ok=True)
+nltk.data.path.append(NLTK_DIR)
 
-# Download NLTK data to /tmp directory in Vercel
+# Download required resources
 try:
-    nltk.data.find('tokenizers/punkt')
+    nltk.data.find("tokenizers/punkt")
 except LookupError:
-    nltk.download('punkt', download_dir="/tmp")
+    nltk.download("punkt", download_dir=NLTK_DIR)
 
 # Global variables for model and class names
 model = None
