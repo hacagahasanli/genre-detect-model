@@ -1,15 +1,15 @@
-Model Accuracy: 82.43%
+Model Accuracy: 84.75%
 
 Classification Report:
               precision    recall  f1-score   support
 
-        epik       0.76      0.85      0.80        40
-     fəlsəfi       0.94      0.89      0.92        38
-       lirik       0.74      0.68      0.70        37
-    romantik       0.76      0.80      0.78        35
-     satirik       0.89      0.89      0.89        36
-      tarixi       0.88      0.83      0.86        36
+        epik       0.75      0.82      0.78        50
+     fəlsəfi       0.98      0.98      0.98        51
+       lirik       0.79      0.79      0.79        48
+    romantik       0.80      0.82      0.81        44
+     satirik       0.95      0.89      0.92        46
+      tarixi       0.82      0.77      0.80        43
 
-    accuracy                           0.82       222
-   macro avg       0.83      0.82      0.82       222
-weighted avg       0.83      0.82      0.82       222
+    accuracy                           0.85       282
+   macro avg       0.85      0.84      0.85       282
+weighted avg       0.85      0.85      0.85       282

@@ -32,6 +32,7 @@ async def generate_literature_async(genres=GENRES, temperature=0.7, max_retries=
         f"Sənin işin azərbaycanca `{genre}` janrında ədəbi mətnlər hazırlamaqdır. "
         "Mətnlər minimum 50 sözdən ibarət olmalı və yüksək ədəbi keyfiyyətdə yazılmalıdır."
         "Yaratdığın cümlələri maksimum fərqli sözlərdən istifadə edərək yarat."
+        "Yaradarkən məşhur Azərbaycan bəstəkarlarının əsərlərindən, şeirlərindən də istifadə et."
         "Cavabınız mütləq düzgün JSON formatında olmalıdır. "
         "Bütün mətnlərdə dırnaq işarələri düzgün qapadılmalıdır."
     )
@@ -73,7 +74,7 @@ async def generate_literature_async(genres=GENRES, temperature=0.7, max_retries=
                 print(f"Request failed after {max_retries} attempts: {e}")
                 return {"text": f"Error generating text: {str(e)}", "genre": genre}
 
-async def generate_samples(total_samples=100, concurrent_requests=50, output_file="data.json"):
+async def generate_samples(total_samples=200, concurrent_requests=50, output_file="data.json"):
     """Generate literature samples with controlled concurrency and append to existing file"""
     
     # Create a semaphore to limit concurrent requests
@@ -113,7 +114,7 @@ if __name__ == "__main__":
     start_time = time.time()
     
     # Run the async function
-    asyncio.run(generate_samples(total_samples=100, concurrent_requests=20))
+    asyncio.run(generate_samples(total_samples=200, concurrent_requests=20))
     
     end_time = time.time()
     print(f"Total execution time: {end_time - start_time:.2f} seconds")
