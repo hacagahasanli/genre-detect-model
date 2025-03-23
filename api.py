@@ -153,9 +153,9 @@ async def predict_genre(input_data: TextInput):
         
         return {
             "genre": best_genre,
-            "confidence": round(float(confidence) * 100, 2),
-            "all_predictions": {k: round(v * 100, 2) for k, v in all_predictions.items()},
-            "characteristics": genre_characteristics.get(best_genre, []) 
+            "confidence": f"{round(float(confidence) * 100, 2)}%",
+            "characteristics": genre_characteristics.get(best_genre, []),
+            "all_predictions": {k: f"{round(v * 100, 2)}%" for k, v in all_predictions.items()}
         }
         
     except Exception as e:
