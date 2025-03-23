@@ -112,6 +112,16 @@ class PredictionResult(BaseModel):
 async def predict_genre(input_data: TextInput):
     global model, class_names
     
+    # Define genre characteristics
+    genre_characteristics = {
+        "romantik": ["Emosional ekspressiya", "Lirik təsvir", "Fərdi hisslər", "Təbiət mənzərələri"],
+        "fəlsəfi": ["Dərin düşüncələr", "Ekzistensial suallar", "Abstrakt ideyalar", "Mənəvi axtarış"],
+        "tarixi": ["Tarixi hadisələr", "Real şəxsiyyətlər", "Dövrün təsviri", "Epik narrativ"],
+        "lirik": ["Şəxsi duyğular", "Qısa və ritmik forma", "Musiqili ton", "Subyektiv baxış"],
+        "epik": ["Təhkiyə", "Təsviri elementlər", "Qəhrəmanlıq motivləri", "Geniş məkan və zaman"],
+        "satirik": ["İroni və yumor", "Sosial tənqid", "Mübaliğə", "Kəskin müşahidələr"]
+    }
+    
     # Check if model is loaded
     if model is None or class_names is None:
         raise HTTPException(status_code=503, detail="Model not loaded. Please try again later.")
@@ -137,13 +147,15 @@ async def predict_genre(input_data: TextInput):
             return {
                 "genre": "unknown",
                 "confidence": 0.0,
-                "all_predictions": all_predictions
+                "all_predictions": all_predictions,
+                "characteristics": []  # Empty characteristics for unknown genre
             }
         
         return {
             "genre": best_genre,
-            "confidence": float(confidence),
-            "all_predictions": all_predictions
+            "confidence": round(float(confidence) * 100, 2),
+            "all_predictions": {k: round(v * 100, 2) for k, v in all_predictions.items()},
+            "characteristics": genre_characteristics.get(best_genre, []) 
         }
         
     except Exception as e:
