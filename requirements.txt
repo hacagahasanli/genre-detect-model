@@ -1,30 +1,30 @@
 # FastAPI and Middleware
-fastapi==0.104.1
-uvicorn==0.23.2
-mangum==0.17.0  # For AWS Lambda or serverless deployment
+fastapi
+uvicorn
+mangum  # For AWS Lambda or serverless deployment
 
 # Pydantic for data validation
-pydantic==1.10.12 
+pydantic
 
 # Machine Learning & Data Processing
-numpy==1.26.2
-scikit-learn==1.3.2
-pandas==2.1.3  # Optional but useful for structured data
+numpy
+scikit-learn
+pandas  # Optional but useful for structured data
 
 # NLP & Tokenization
-nltk==3.8.1
+nltk
 
 # Visualization
-matplotlib==3.8.2
-seaborn==0.13.0
+matplotlib
+seaborn
 
 # Async & Progress Tracking
 asyncio  # Built-in module, no need for versioning
-tqdm==4.66.1
-together==0.2.9  # If using Together AI API
+tqdm
+together  # If using Together AI API
 
 # Serialization and Model Handling
-pickle-mixin==1.0.2  # Alternative for better cross-version pickle compatibility
+pickle-mixin  # Alternative for better cross-version pickle compatibility
 
 # CORS Middleware & File Handling
-python-multipart==0.0.6  # Required for FastAPI file uploads
+python-multipart  # Required for FastAPI file uploads
